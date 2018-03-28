@@ -1,5 +1,6 @@
 package com.aim.printerdemo_nosdk;
 
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import android.widget.Button;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -145,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
             // Standard SerialPortService ID
             UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
             mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
+            
             mmSocket.connect();
             mmOutputStream = mmSocket.getOutputStream();
             mmInputStream = mmSocket.getInputStream();
@@ -260,6 +263,38 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void printTable1( Resources resources) {
+
+        /*
+        String column = "\n"+resources.getString(R.string.pagesa_title)+"\n\n";
+
+        Table table = null;
+        if (PrinterConstants.paperWidth == 384) {
+            table = new Table(column, ";", new int[] { 14, 6, 6, 6 });
+        } else if (PrinterConstants.paperWidth == 576) {
+            table = new Table(column, ";", new int[] { 22, 14, 14, 8 });
+        } else if (PrinterConstants.paperWidth == 816) {
+            table = new Table(column, ";", new int[] { 4, 18, 4, 6, 6, 10, 6, 10 });
+        }
+
+        //System.out.println("paperWidth: "+PrinterConstants.paperWidth);
+        table.addRow("");
+        table.addRow("NR.; PERSHKRIMI; NJ; SASIA; CMIMI; VLERA; TVSH; SHUMA");
+        for (int i=0;i<items.size();i++) {
+            double tvsh = 110;//items.get(i).getPriceWithTax()- items.get(i).getPriceWithoutTax();
+            int shuma = items.get(i).getPriceWithTax() * items.get(i).getQuantity();
+            table.addRow(String.valueOf(i + 1) + ";" + items.get(i).getName() + ";" + items.get(i).getUnitCode().toString() + ";" +
+                    String.valueOf(items.get(i).getQuantity()) + ";" + String.valueOf(items.get(i).getPriceWithTax()) + ";"
+                    +String.valueOf(items.get(i).getPriceWithoutTax())+";"+String.valueOf(tvsh)+";"+String.valueOf(shuma));
+
+        }//table.addRow("" + resources.getString(R.string.bags) + ";10.00;1;10.00");
+        //table.addRow("" + resources.getString(R.string.hook) + ";5.00;2;10.00");
+        //table.addRow("" + resources.getString(R.string.umbrella) + ";5.00;3;15.00");
+        table.addRow("");
+        mPrinter.printTable(table);
+    */
     }
 
 }
