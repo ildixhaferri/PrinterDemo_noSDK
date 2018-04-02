@@ -239,7 +239,24 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             // the text typed by the user
-            String msg = myTextbox.getText().toString();
+            String msg = printTable1();//myTextbox.getText().toString();
+            msg += "\n";
+
+            mmOutputStream.write(msg.getBytes());
+
+            // tell the user data were sent
+            myLabel.setText("Data sent.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void sendData(String text) throws IOException {
+        try {
+
+            // the text typed by the user
+            String msg = text;
             msg += "\n";
 
             mmOutputStream.write(msg.getBytes());
@@ -265,24 +282,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void printTable1( Resources resources) {
+    public String printTable1() throws IOException {
 
-        /*
-        String column = "\n"+resources.getString(R.string.pagesa_title)+"\n\n";
+        PrinterInstance printerInstance = new PrinterInstance(mmOutputStream);
+        printerInstance.setFont(0,0,0,1,0);
+        String column = "\n"+"FATURE SHITJE"+"\n\n";
 
         Table table = null;
-        if (PrinterConstants.paperWidth == 384) {
-            table = new Table(column, ";", new int[] { 14, 6, 6, 6 });
-        } else if (PrinterConstants.paperWidth == 576) {
-            table = new Table(column, ";", new int[] { 22, 14, 14, 8 });
-        } else if (PrinterConstants.paperWidth == 816) {
-            table = new Table(column, ";", new int[] { 4, 18, 4, 6, 6, 10, 6, 10 });
-        }
 
+        table = new Table(column, ";", new int[] { 4, 18, 4, 6, 6, 10, 6, 10 });
+
+        printerInstance.setFont(0,0,0,0,0);
         //System.out.println("paperWidth: "+PrinterConstants.paperWidth);
         table.addRow("");
         table.addRow("NR.; PERSHKRIMI; NJ; SASIA; CMIMI; VLERA; TVSH; SHUMA");
-        for (int i=0;i<items.size();i++) {
+        /*for (int i=0;i<items.size();i++) {
             double tvsh = 110;//items.get(i).getPriceWithTax()- items.get(i).getPriceWithoutTax();
             int shuma = items.get(i).getPriceWithTax() * items.get(i).getQuantity();
             table.addRow(String.valueOf(i + 1) + ";" + items.get(i).getName() + ";" + items.get(i).getUnitCode().toString() + ";" +
@@ -291,10 +305,12 @@ public class MainActivity extends AppCompatActivity {
 
         }//table.addRow("" + resources.getString(R.string.bags) + ";10.00;1;10.00");
         //table.addRow("" + resources.getString(R.string.hook) + ";5.00;2;10.00");
-        //table.addRow("" + resources.getString(R.string.umbrella) + ";5.00;3;15.00");
+        //table.addRow("" + resources.getString(R.string.umbrella) + ";5.00;3;15.00"); */
+        table.addRow(String.valueOf(1) + ";" + "Artikulli pare" + ";" + "CP1234" + ";" + "4" + ";" + "280" + ";"
+                      +"220"+";"+"60"+";"+"280L");
         table.addRow("");
-        mPrinter.printTable(table);
-    */
+        return table.getTableText();
+
     }
 
 }

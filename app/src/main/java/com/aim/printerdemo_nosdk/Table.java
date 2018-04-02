@@ -14,7 +14,7 @@ import java.util.Map;
 @SuppressLint({"UseSparseArrays"})
 public class Table {
 
-    /*
+
         private List<String> tableRows = new ArrayList();
         private String tableReg;
         private HashMap<Integer, String> unPrintColumnMap = new HashMap();
@@ -61,7 +61,7 @@ public class Table {
 
         private String printTableLine(String[] tableLine) {
             StringBuffer sb = new StringBuffer();
-            int sub_length = false;
+            int sub_length = 0;
             String[] line = tableLine;
 
             for(int i = 0; i < line.length; ++i) {
@@ -75,7 +75,7 @@ public class Table {
                     return sb.toString();
                 }
 
-                int length = Utils.getStringCharacterLength(line[i]);
+                int length = getStringCharacterLength(line[i]);
                 int col_length = this.tableColWidth.length;
                 int col_width = 8;
                 if(i < col_length) {
@@ -83,7 +83,7 @@ public class Table {
                 }
 
                 if(length > col_width && i != line.length - 1) {
-                    sub_length = Utils.getSubLength(line[i], col_width);
+                    sub_length = getSubLength(line[i], col_width);
                     this.unPrintColumnMap.put(Integer.valueOf(i), line[i].substring(sub_length, line[i].length()));
                     line[i] = line[i].substring(0, sub_length);
                     sb = new StringBuffer();
@@ -149,5 +149,42 @@ public class Table {
             }
         }
 
-        */
+
+    public static int getStringCharacterLength(String line) {
+        int length = 0;
+
+        for(int j = 0; j < line.length(); ++j) {
+            if(line.charAt(j) > 256) {
+                length += 2;
+            } else {
+                ++length;
+            }
+        }
+
+        return length;
+    }
+
+    public static int getSubLength(String line, int width) {
+        int length = 0;
+
+        for(int j = 0; j < line.length(); ++j) {
+            if(line.charAt(j) > 256) {
+                length += 2;
+            } else {
+                ++length;
+            }
+
+            if(length > width) {
+                int temp = line.substring(0, j - 1).lastIndexOf(" ");
+                if(temp != -1) {
+                    return temp;
+                }
+
+                return j - 1 == 0?1:j - 1;
+            }
+        }
+
+        return line.length();
+    }
+
 }
